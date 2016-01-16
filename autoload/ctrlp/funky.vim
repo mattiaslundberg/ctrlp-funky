@@ -294,7 +294,6 @@ function! ctrlp#funky#funky(word, ...)
     let s:is_deep = get(opts, 'deep', 0)
     let s:is_multi_buffers = get(opts, 'multi_buffers', 0)
 
-    let s:winnr = winnr()
     call ctrlp#init(ctrlp#funky#id())
   finally
     if exists('default_input_save')
@@ -398,7 +397,7 @@ function! ctrlp#funky#accept(mode, str)
   let bufnr = matchstr(a:str, ':\zs\d\+\ze:')
   " should be current window = former window
   let lnum = matchstr(a:str, '\d\+$')
-  execute 'noautocmd ' . get(s:, 'winnr', 1) . 'wincmd w'
+  execute 'noautocmd ' . get(g:, 'ctrlp_before_winnr', 1) . 'wincmd w'
   call s:load_buffer_by_number(bufnr)
   call cursor(lnum, 1)
 
